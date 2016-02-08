@@ -1,4 +1,4 @@
-angular.module('leaflet-directive', []).directive('leaflet', function($q, leafletData, leafletMapDefaults, leafletHelpers, leafletMapEvents) {
+angular.module('leaflet-directive', []).directive('leaflet', function ($q, leafletData, leafletMapDefaults, leafletHelpers, leafletMapEvents) {
   return {
     restrict: 'EA',
     replace: true,
@@ -22,18 +22,18 @@ angular.module('leaflet-directive', []).directive('leaflet', function($q, leafle
     },
     transclude: true,
     template: '<div class="angular-leaflet-map"><div ng-transclude></div></div>',
-    controller: function($scope) {
+    controller: function ($scope) {
       this._leafletMap = $q.defer();
-      this.getMap = function() {
+      this.getMap = function () {
         return this._leafletMap.promise;
       };
 
-      this.getLeafletScope = function() {
+      this.getLeafletScope = function () {
         return $scope;
       };
     },
 
-    link: function(scope, element, attrs, ctrl) {
+    link: function (scope, element, attrs, ctrl) {
       var isDefined = leafletHelpers.isDefined;
       var defaults  = leafletMapDefaults.setDefaults(scope.defaults, attrs.id);
       var mapEvents = leafletMapEvents.getAvailableMapEvents();
@@ -65,11 +65,11 @@ angular.module('leaflet-directive', []).directive('leaflet', function($q, leafle
         updateWidth();
 
         scope.$watch(
-          function() {
+          function () {
             return element[0].getAttribute('width');
           },
 
-          function() {
+          function () {
             updateWidth();
             map.invalidateSize();
           });
@@ -81,11 +81,11 @@ angular.module('leaflet-directive', []).directive('leaflet', function($q, leafle
         updateHeight();
 
         scope.$watch(
-          function() {
+          function () {
             return element[0].getAttribute('height');
           },
 
-          function() {
+          function () {
             updateHeight();
             map.invalidateSize();
           });
@@ -129,11 +129,11 @@ angular.module('leaflet-directive', []).directive('leaflet', function($q, leafle
       }
 
       // Resolve the map object to the promises
-      map.whenReady(function() {
+      map.whenReady(function () {
         leafletData.setMap(map, attrs.id);
       });
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', function () {
         leafletMapDefaults.reset();
         map.remove();
         leafletData.unresolveMap(attrs.id);
@@ -142,7 +142,7 @@ angular.module('leaflet-directive', []).directive('leaflet', function($q, leafle
       //Handle request to invalidate the map size
       //Up scope using $scope.$emit('invalidateSize')
       //Down scope using $scope.$broadcast('invalidateSize')
-      scope.$on('invalidateSize', function() {
+      scope.$on('invalidateSize', function () {
         map.invalidateSize();
       });
     },

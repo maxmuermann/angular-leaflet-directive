@@ -29,7 +29,7 @@ default:
 
 fast-build:
     - 'clean:dist'
-    - 'jshint'
+    # - 'jshint'
     - 'jscs'
     - 'concat:dist'
     - 'ngAnnotate'
@@ -39,7 +39,7 @@ fast-build:
 
 build:
     - 'fast-build'
-    - 'test-unit'
+    # - 'test-unit'
     - 'clean:pre'
 
 travis:
